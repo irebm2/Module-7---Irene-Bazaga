@@ -15,3 +15,5 @@ setInterval(function () {
     // Update the text with both date and time
     CurrentDay.text(CurrentDate + ' ' + CurrentTime);
 }, 1000);
+
+
