@@ -54,10 +54,10 @@ $(document).ready(function () {
 
             // Change the text box appearance based on whether the time slot is blocked or not.
             if (timeslot.hasClass('is-blocked')) {
-                textBox.removeClass('future').addClass('present');
-            } else {
-                textBox.removeClass('present').addClass('future');
-            }
+                textBox.removeClass('future past').addClass('present');
+            } else if (currentTimeHour >= BoxTimeHour) {
+                textBox.removeClass('present').addClass('past');
+            }  else {textBox.addClass('future');} 
 
             // Save the state of all time slots in local storage.
             let state = []; 
