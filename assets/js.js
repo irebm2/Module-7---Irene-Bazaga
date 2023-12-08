@@ -15,11 +15,11 @@ $(document).ready(function() {
     // Create timeslots for each hour from 9 AM to 6 PM
     for (let hour = 9; hour <= 18; hour++) {
       let time = dayjs().hour(hour).minute(0);
-      let timeslot = $('<div>').addClass('timeslot');
+      let timeslot = $('<div>').addClass('timeslot ');
       let title = $('<div>').addClass('time-title').text(time.format('h A'));
   
       const placeholderTxt = `What is the plan for ${time.format('h A')}?`;
-      let textBox = $('<textarea>').addClass('text-box').attr('placeholder', placeholderTxt);
+      let textBox = $('<textarea>').addClass('text-box time-block row').attr('placeholder', placeholderTxt);
   
       let blockButton = $('<button>').addClass('block-button').text('Block 🔐');
   

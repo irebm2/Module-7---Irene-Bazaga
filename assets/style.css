@@ -70,3 +70,23 @@ header {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
+.timeslot {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.timeslot .time-title {
+  flex: 0 1 20%; /* 20% width */
+  text-align: center;
+}
+
+.timeslot .text-box {
+  flex: 1 1 30%; /* 60% width */
+  margin-bottom: 10px;
+}
+
+.timeslot .block-button {
+  flex: 0 1 20%; /* 20% width */
+  text-align: center;
+}
