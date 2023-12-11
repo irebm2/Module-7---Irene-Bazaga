@@ -1,4 +1,4 @@
-// Start when the document is ready.
+// Start when the document is ready
 $(document).ready(function () {
     // Get the current day element.
     let currentDay = $('#currentDay');
