@@ -57,6 +57,10 @@ header {
   background-color: #77dd77;
   color: white;
 }
+.booked {
+  background-color: #0780f1;
+  color: rgb(9, 2, 49)
+}
 
 .saveBtn {
   border-left: 1px solid black;

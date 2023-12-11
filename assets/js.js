@@ -1,18 +1,14 @@
 // Start when the document is ready.
 $(document).ready(function () {
-
     // Get the current day element.
     let currentDay = $('#currentDay');
 
     // Function to update the time.
     function updateTime() {
-        // Get the current time.
-        let now = dayjs();
+               let now = dayjs();
 
         // Set the text of the current day element to the current time.
         currentDay.text(now.format('dddd, D MMM HH:mm:ss'));
-
-        // Call this updateTime function again after 1 second.
         setTimeout(updateTime, 1000);
     }
 
@@ -21,7 +17,6 @@ $(document).ready(function () {
 
     // Loop over every hour of the day from 9 to 18.
     for (let hour = 9; hour <= 18; hour++) {
-
         // Create a time variable for the current hour.
         let time = dayjs().hour(hour).minute(0);
 
@@ -30,13 +25,16 @@ $(document).ready(function () {
         let title = $('<div>').addClass('time-title').text(time.format('h A'));
         const placeholderTxt = `What is the plan for ${time.format('h A')}?`;
         let textBox = $('<textarea>').addClass('text-box time-block row future').attr('placeholder', placeholderTxt);
-        let blockButton = $('<button>').addClass('block-button').text('Block 🔐');
+        let blockButton = $('<button>').addClass('block-button').text('Save 💾');
 
         // Check if the current hour is past the time slot hour, if so change the text box to have class 'past'.
         let currentTimeHour = parseInt(dayjs().format('HH')); // Get the current hour
         let BoxTimeHour = parseInt(time.format('HH')); // Get the hour of the current time slot
-        if (currentTimeHour >= BoxTimeHour) {
+        if (currentTimeHour > BoxTimeHour) {
             textBox.removeClass('future').addClass('past');
+        }
+        else if(currentTimeHour == BoxTimeHour){
+            textBox.removeClass('future').addClass('present');
         }
 
         // Assign a click handler to the block button.
@@ -48,15 +46,19 @@ $(document).ready(function () {
             timeslot.toggleClass('is-blocked');
 
             // Change the button text based on whether the time slot is blocked or not.
-            blockButton.text(timeslot.hasClass('is-blocked') ? 'Unblock 🔓' : 'Block 🔐');
+            blockButton.text(timeslot.hasClass('is-blocked') ? 'Remove ❌' : 'Save 💾');
 
             // Change the text box appearance based on whether the time slot is blocked or not.
             if (timeslot.hasClass('is-blocked')) {
-                textBox.removeClass('future past').addClass('present');
-            } else if (currentTimeHour >= BoxTimeHour) {
-                textBox.removeClass('present').addClass('past');
+                textBox.removeClass('future past').addClass('booked');
             } else {
-                textBox.addClass('future');
+                if (currentTimeHour > BoxTimeHour) {
+                    textBox.removeClass('booked').addClass('past');
+                } else if (currentTimeHour === BoxTimeHour) {
+                    textBox.removeClass('booked').addClass('present');
+                } else {
+                    textBox.removeClass('booked').addClass('future');
+                }
             }
 
             // Save the state of all time slots in local storage.
@@ -78,6 +80,7 @@ $(document).ready(function () {
         timeslot.append(title, textBox, blockButton);
         $('body').append(timeslot);
     }
+
     if (localStorage.getItem('timeslotData')) {
         // Parse the state from local storage into a JavaScript object.
         let data = JSON.parse(localStorage.getItem('timeslotData'));
@@ -94,9 +97,9 @@ $(document).ready(function () {
                 textarea.val(timeslotData.text);
     
                 // Change the appearance of the text box and button to show that they are blocked.
-                textarea.removeClass('future').addClass('present');
-                button.text('Unblock 🔓');
+                textarea.removeClass('future').addClass('booked');
+                button.text('Remove ❌');
             }
         });
     }
-    });
+});
